@@ -22,6 +22,7 @@ public class EmployeeController {
     @PostMapping
     public EmployeeResponse createEmployee(
             @RequestBody EmployeeRequest employeeRequest){
+
         Employee employee = new Employee();
         employee.setName(employeeRequest.getName());
         employee.setEmail(employeeRequest.getEmail());

@@ -18,4 +18,6 @@ public class Employee {
     private String email;
 
     private String department;
+
+    private String password;
 }
