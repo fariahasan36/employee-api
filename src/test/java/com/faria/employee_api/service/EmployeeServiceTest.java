@@ -25,15 +25,17 @@ class EmployeeServiceTest {
 
     @Test
     void shouldReturnEmployeesByName() {
-
+        // Arrange
         Employee employee = new Employee();
         employee.setName("Faria");
 
         when(repository.findAllByName("Faria"))
                 .thenReturn(List.of(employee));
 
+        //Act
         List<Employee> employees = service.getEmployeeByName("Faria");
 
+        //Assert
         assertEquals(1, employees.size());
         assertEquals("Faria", employees.get(0).getName());
     }

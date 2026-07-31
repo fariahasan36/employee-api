@@ -3,6 +3,9 @@ package com.faria.employee_api.service;
 import com.faria.employee_api.entity.Employee;
 import com.faria.employee_api.repository.EmployeeRepository;
 import com.faria.employee_api.request.EmployeeRequest;
+import com.faria.employee_api.response.EmployeeResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +17,8 @@ import static org.hibernate.internal.util.collections.ArrayHelper.forEach;
 public class EmployeeService {
     private final EmployeeRepository repository;
 
+    private static final Logger log =
+            LoggerFactory.getLogger(EmployeeService.class);
 
     public EmployeeService(EmployeeRepository repository){
 
@@ -21,11 +26,27 @@ public class EmployeeService {
     }
 
     public Employee createEmployee(Employee employee){
-        return repository.save(employee);
-    }
+        try {
 
-    public List<Employee> getAllEmployee(){
-        return repository.findAll();
+            return repository.save(employee);
+    } catch(Exception e){
+            log.error("Failed creating employee", e);
+            throw e;
+        }}
+
+    public List<EmployeeResponse> getAllEmployee(){
+        try {return repository.findAll()
+                .stream()
+                .map(employee -> new EmployeeResponse(employee.getName())).toList()
+                ;} catch(Exception e){
+
+            log.error(
+                    "Could not get any employee",
+                    e
+            );
+
+            throw e;
+        }
     }
 
     public Optional<Employee> getEmployeeById(long id){

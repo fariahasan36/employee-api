@@ -39,7 +39,7 @@ class EmployeeControllerTest {
 
 
     @Test
-    void shouldReturnEmployeeByName() throws Exception {
+    void shouldUpdateEmployeeName() throws Exception {
 
 
         Employee employee = new Employee();
@@ -50,7 +50,6 @@ class EmployeeControllerTest {
                 org.mockito.ArgumentMatchers.eq("Faria"),
                 org.mockito.ArgumentMatchers.any(EmployeeRequest.class)
         )).thenReturn(List.of(employee));
-
 
         mockMvc.perform(
                         patch("/api/employees/name/Faria")

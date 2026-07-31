@@ -1,6 +1,5 @@
 package com.faria.employee_api.security;
 
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,21 +8,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-
 import java.io.IOException;
-
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-
     private final JwtService jwtService;
-
 
     public JwtFilter(JwtService jwtService){
         this.jwtService = jwtService;
     }
-
 
     @Override
     protected void doFilterInternal(
@@ -32,7 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        if(request.getRequestURI().equals("/auth/token")){
+        if(request.getRequestURI().equals("/auth/token") || request.getRequestURI().startsWith("/actuator")){
             filterChain.doFilter(request,response);
             return;
         }
@@ -61,7 +55,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
         }
-
 
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT");    }
 }

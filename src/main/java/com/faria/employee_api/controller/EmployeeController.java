@@ -5,6 +5,7 @@ import com.faria.employee_api.request.EmployeeRequest;
 import com.faria.employee_api.response.EmployeeResponse;
 import com.faria.employee_api.service.EmployeeService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class EmployeeController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public EmployeeResponse createEmployee(
             @RequestBody EmployeeRequest employeeRequest){
 
@@ -34,8 +36,10 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> getAllEmployee(){
-        return service.getAllEmployee();
+    public ResponseEntity<List<EmployeeResponse>> getAllEmployee(){
+        List<EmployeeResponse> employees = service.getAllEmployee();
+
+        return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/{id}")
